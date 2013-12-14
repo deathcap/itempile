@@ -1,10 +1,10 @@
 {
-  "name": "inventory",
-  "description": "item inventory management",
+  "name": "itempile",
+  "description": "split and merge 'piles' of items",
   "version": "0.0.1",
   "repository": {
     "type": "git",
-    "url": "git@github.com:deathcap/inventory.git"
+    "url": "git@github.com:deathcap/itempile.git"
   },
   "scripts": {
     "test": "node test.js"
