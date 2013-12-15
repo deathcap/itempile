@@ -86,7 +86,7 @@
     ItemPile.prototype.tryAdding = function(n) {
       var sum;
       sum = this.count + n;
-      if (sum > ItemPile.maxPileSize) {
+      if (sum > ItemPile.maxPileSize && this.count !== Infinity) {
         return [ItemPile.maxPileSize, sum - ItemPile.maxPileSize];
       } else {
         return [sum, 0];

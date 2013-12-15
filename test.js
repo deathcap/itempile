@@ -150,4 +150,16 @@
     return t.end();
   });
 
+  test('infinite', function(t) {
+    var a;
+    a = new ItemPile('magic', Infinity);
+    a.decrease(1);
+    t.equal(a.count, Infinity);
+    a.decrease(1000000);
+    t.equal(a.count, Infinity);
+    a.increase(1000000000);
+    t.equal(a.count, Infinity);
+    return t.end();
+  });
+
 }).call(this);

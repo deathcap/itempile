@@ -63,7 +63,7 @@ class ItemPile
   # try combining count of items up to max pile size, returns [newCount, excessCount]
   tryAdding: (n) ->
     sum = @count + n
-    if sum > ItemPile.maxPileSize
+    if sum > ItemPile.maxPileSize and @count != Infinity # (special case: infinite piles never overflow)
       return [ItemPile.maxPileSize, sum - ItemPile.maxPileSize] # overflowing pile
     else
       return [sum, 0] # added everything they wanted

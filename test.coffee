@@ -135,3 +135,13 @@ test 'itemFromString', (t) ->
   t.equals(d, '')
   t.end()
 
+test 'infinite', (t) ->
+  a = new ItemPile('magic', Infinity)
+  a.decrease(1)
+  t.equal(a.count, Infinity)
+  a.decrease(1000000)
+  t.equal(a.count, Infinity)
+  a.increase(1000000000)
+  t.equal(a.count, Infinity)
+  t.end()
+
