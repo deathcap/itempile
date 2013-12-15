@@ -6,7 +6,7 @@
 
   ItemPile = require('./');
 
-  test('ItemPile create default', function(t) {
+  test('create default', function(t) {
     var a;
     a = new ItemPile('dirt');
     t.equal(a.item, 'dirt');
@@ -15,14 +15,14 @@
     return t.end();
   });
 
-  test('ItemPile empty tags', function(t) {
+  test('empty tags', function(t) {
     var a;
     a = new ItemPile('dirt', 1, {});
     t.deepEqual(a.tags, {});
     return t.end();
   });
 
-  test('ItemPile increase', function(t) {
+  test('increase', function(t) {
     var a, excess;
     a = new ItemPile('dirt', 1);
     excess = a.increase(10);
@@ -34,7 +34,7 @@
     return t.end();
   });
 
-  test('ItemPile merge', function(t) {
+  test('merge', function(t) {
     var a, b, excess;
     a = new ItemPile('dirt', 1);
     b = new ItemPile('dirt', 80);
@@ -47,7 +47,7 @@
     return t.end();
   });
 
-  test('ItemPile split', function(t) {
+  test('split', function(t) {
     var a, b;
     a = new ItemPile('dirt', 64);
     b = a.splitPile(32);
@@ -58,7 +58,7 @@
     return t.end();
   });
 
-  test('ItemPile split bad', function(t) {
+  test('split bad', function(t) {
     var a, b;
     a = new ItemPile('dirt', 10);
     b = a.splitPile(1000);
@@ -67,7 +67,7 @@
     return t.end();
   });
 
-  test('ItemPile matches', function(t) {
+  test('matches', function(t) {
     var a, b, c, d, e, f, g;
     a = new ItemPile('dirt', 3);
     b = new ItemPile('dirt', 4);
@@ -101,7 +101,7 @@
     return t.end();
   });
 
-  test('ItemPile toString', function(t) {
+  test('toString', function(t) {
     var a, b;
     a = new ItemPile('dirt', 42);
     console.log(a.toString());
@@ -114,7 +114,7 @@
     return t.end();
   });
 
-  test('ItemPile fromString', function(t) {
+  test('fromString', function(t) {
     var a;
     a = ItemPile.fromString('24:dirt');
     console.log(a);
@@ -124,7 +124,7 @@
     return t.end();
   });
 
-  test('ItemPile fromString/toString roundtrip', function(t) {
+  test('fromString/toString roundtrip', function(t) {
     var b, outStr, s, strings, _i, _len;
     strings = ['24:dirt', '48:dirt', '1000:dirt', '0:dirt', '1:foo {"tag":1}', '2:hmm {"foo":[],"bar":2}'];
     for (_i = 0, _len = strings.length; _i < _len; _i++) {
@@ -137,7 +137,7 @@
     return t.end();
   });
 
-  test('ItemPile itemFromString', function(t) {
+  test('itemFromString', function(t) {
     var a, b, c, d;
     a = ItemPile.itemFromString('foo');
     t.equals(a, 'foo');

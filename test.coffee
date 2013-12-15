@@ -3,19 +3,19 @@
 test = require 'tape'
 ItemPile = require './'
 
-test 'ItemPile create default', (t) ->
+test 'create default', (t) ->
   a = new ItemPile('dirt')
   t.equal a.item, 'dirt'
   t.equal a.count, 1
   t.deepEqual a.tags, {}
   t.end()
 
-test 'ItemPile empty tags', (t) ->
+test 'empty tags', (t) ->
   a = new ItemPile('dirt', 1, {})
   t.deepEqual a.tags, {}
   t.end()
 
-test 'ItemPile increase', (t) ->
+test 'increase', (t) ->
   a = new ItemPile('dirt', 1)
   excess = a.increase(10)
   t.equal a.count, 11
@@ -26,7 +26,7 @@ test 'ItemPile increase', (t) ->
   t.equal excess, 47 
   t.end()
 
-test 'ItemPile merge', (t) ->
+test 'merge', (t) ->
   a = new ItemPile('dirt', 1)
   b = new ItemPile('dirt', 80)
 
@@ -40,7 +40,7 @@ test 'ItemPile merge', (t) ->
 
   t.end()
 
-test 'ItemPile split', (t) ->
+test 'split', (t) ->
   a = new ItemPile('dirt', 64)
   b = a.splitPile(32)
 
@@ -50,7 +50,7 @@ test 'ItemPile split', (t) ->
   t.equal(a.tags, b.tags)
   t.end()
 
-test 'ItemPile split bad', (t) ->
+test 'split bad', (t) ->
   a = new ItemPile('dirt', 10)
   b = a.splitPile(1000)
   
@@ -58,7 +58,7 @@ test 'ItemPile split bad', (t) ->
   t.equal(a.count, 10)  # unchanged
   t.end()
 
-test 'ItemPile matches', (t) ->
+test 'matches', (t) ->
   a = new ItemPile('dirt', 3)
   b = new ItemPile('dirt', 4)
   
@@ -87,7 +87,7 @@ test 'ItemPile matches', (t) ->
 
   t.end()
 
-test 'ItemPile toString', (t) ->
+test 'toString', (t) ->
   a = new ItemPile('dirt', 42)
   console.log a.toString()
   t.equal(a+'', '42:dirt')
@@ -97,7 +97,7 @@ test 'ItemPile toString', (t) ->
   t.equal(b+'', '1:magic {"foo":-7}')
   t.end()
 
-test 'ItemPile fromString', (t) ->
+test 'fromString', (t) ->
   a = ItemPile.fromString('24:dirt')
   console.log(a)
   t.equal(a.count, 24)
@@ -105,7 +105,7 @@ test 'ItemPile fromString', (t) ->
   t.equal(a.hasTags(), false)
   t.end()
 
-test 'ItemPile fromString/toString roundtrip', (t) ->
+test 'fromString/toString roundtrip', (t) ->
   strings = [
     '24:dirt'
     '48:dirt'
@@ -121,7 +121,7 @@ test 'ItemPile fromString/toString roundtrip', (t) ->
     console.log("=",s, outStr)
   t.end()
 
-test 'ItemPile itemFromString', (t) ->
+test 'itemFromString', (t) ->
   a = ItemPile.itemFromString('foo')
   t.equals(a, 'foo')
 
