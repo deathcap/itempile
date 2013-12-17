@@ -47,6 +47,18 @@
     return t.end();
   });
 
+  test('merge 0-size', function(t) {
+    var a, b, excess;
+    a = new ItemPile('pick', 0);
+    b = new ItemPile('pick', 1, {
+      damage: 0
+    });
+    excess = a.mergePile(b);
+    t.equal(excess, 0);
+    t.equal(a.count, 1);
+    return t.end();
+  });
+
   test('split', function(t) {
     var a, b;
     a = new ItemPile('dirt', 64);

@@ -39,6 +39,7 @@ class ItemPile
   # can this pile be merged with another?
   canPileWith: (itemPile) ->
     return false if itemPile.item != @item
+    return true if itemPile.count == 0 or @count == 0 # (special case: can always merge with 0-size pile of same item, regardless of tags - for placeholder slots)
     return false if itemPile.hasTags() or @hasTags() # any tag data makes unpileable
     true
 

@@ -40,6 +40,16 @@ test 'merge', (t) ->
 
   t.end()
 
+test 'merge 0-size', (t) ->
+  a = new ItemPile('pick', 0)
+  b = new ItemPile('pick', 1, {damage:0})
+
+  excess = a.mergePile(b)
+
+  t.equal(excess, 0)
+  t.equal(a.count, 1)
+  t.end()
+
 test 'split', (t) ->
   a = new ItemPile('dirt', 64)
   b = a.splitPile(32)

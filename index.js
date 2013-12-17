@@ -56,6 +56,9 @@
       if (itemPile.item !== this.item) {
         return false;
       }
+      if (itemPile.count === 0 || this.count === 0) {
+        return true;
+      }
       if (itemPile.hasTags() || this.hasTags()) {
         return false;
       }
