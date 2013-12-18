@@ -68,6 +68,15 @@ test 'split bad', (t) ->
   t.equal(a.count, 10)  # unchanged
   t.end()
 
+test 'split neg', (t) ->
+  a = new ItemPile('dirt', 10)
+  b = a.splitPile(-1)
+
+  t.equal(a.count, 1)
+  t.equal(b.count, 9)
+
+  t.end()
+
 test 'matches', (t) ->
   a = new ItemPile('dirt', 3)
   b = new ItemPile('dirt', 4)

@@ -79,6 +79,7 @@ class ItemPile
 
   # remove count of argument items, returning new pile of those items which were split off
   splitPile: (n) ->
+    n = @count + n if n < 0   # negative count = all but n
     return false if n > @count
     @count -= n
 

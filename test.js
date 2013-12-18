@@ -79,6 +79,15 @@
     return t.end();
   });
 
+  test('split neg', function(t) {
+    var a, b;
+    a = new ItemPile('dirt', 10);
+    b = a.splitPile(-1);
+    t.equal(a.count, 1);
+    t.equal(b.count, 9);
+    return t.end();
+  });
+
   test('matches', function(t) {
     var a, b, c, d, e, f, g;
     a = new ItemPile('dirt', 3);
