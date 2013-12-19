@@ -88,6 +88,24 @@
     return t.end();
   });
 
+  test('split fract half', function(t) {
+    var a, b;
+    a = new ItemPile('gold', 10);
+    b = a.splitPile(0.5);
+    t.equal(a.count, 5);
+    t.equal(b.count, 5);
+    return t.end();
+  });
+
+  test('split fract uneven', function(t) {
+    var a, b;
+    a = new ItemPile('gold', 11);
+    b = a.splitPile(0.5);
+    t.equal(a.count, 6);
+    t.equal(b.count, 5);
+    return t.end();
+  });
+
   test('matches', function(t) {
     var a, b, c, d, e, f, g;
     a = new ItemPile('dirt', 3);

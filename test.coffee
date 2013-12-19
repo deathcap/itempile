@@ -77,6 +77,22 @@ test 'split neg', (t) ->
 
   t.end()
 
+test 'split fract half', (t) ->
+  a = new ItemPile('gold', 10)
+  b = a.splitPile(0.5)
+
+  t.equal(a.count, 5)
+  t.equal(b.count, 5)
+  t.end()
+
+test 'split fract uneven', (t) ->
+  a = new ItemPile('gold', 11)
+  b = a.splitPile(0.5)
+
+  t.equal(a.count, 6)
+  t.equal(b.count, 5)
+  t.end()
+
 test 'matches', (t) ->
   a = new ItemPile('dirt', 3)
   b = new ItemPile('dirt', 4)

@@ -79,7 +79,13 @@ class ItemPile
 
   # remove count of argument items, returning new pile of those items which were split off
   splitPile: (n) ->
-    n = @count + n if n < 0   # negative count = all but n
+    if n < 0 
+      # negative count = all but n
+      n = @count + n
+    else if n < 1
+      # fraction = fraction
+      n = Math.floor(@count * n)
+
     return false if n > @count
     @count -= n
 

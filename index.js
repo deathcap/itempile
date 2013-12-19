@@ -109,6 +109,8 @@
     ItemPile.prototype.splitPile = function(n) {
       if (n < 0) {
         n = this.count + n;
+      } else if (n < 1) {
+        n = Math.floor(this.count * n);
       }
       if (n > this.count) {
         return false;
