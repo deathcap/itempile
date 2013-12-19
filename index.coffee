@@ -84,7 +84,7 @@ class ItemPile
       n = @count + n
     else if n < 1
       # fraction = fraction
-      n = Math.floor(@count * n)
+      n = Math.ceil(@count * n)
 
     return false if n > @count
     @count -= n

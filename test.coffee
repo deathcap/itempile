@@ -89,8 +89,8 @@ test 'split fract uneven', (t) ->
   a = new ItemPile('gold', 11)
   b = a.splitPile(0.5)
 
-  t.equal(a.count, 6)
-  t.equal(b.count, 5)
+  t.equal(a.count, 5)
+  t.equal(b.count, 6)
   t.end()
 
 test 'matches', (t) ->
