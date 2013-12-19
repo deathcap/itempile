@@ -26,7 +26,21 @@ test 'increase', (t) ->
   t.equal excess, 47 
   t.end()
 
-test 'merge', (t) ->
+test 'merge simple', (t) ->
+  a = new ItemPile('dirt', 10)
+  b = new ItemPile('dirt', 20)
+  
+  excess = a.mergePile(b)
+
+  t.equal(a.item, b.item)
+  t.equal(a.count + b.count, 10 + 20)
+  t.equal(excess, 0)
+  t.equal(a.count, 30)
+  t.equal(b.count, 0)
+  t.end()
+
+
+test 'merge big', (t) ->
   a = new ItemPile('dirt', 1)
   b = new ItemPile('dirt', 80)
 
@@ -52,10 +66,10 @@ test 'merge 0-size', (t) ->
 
 test 'split', (t) ->
   a = new ItemPile('dirt', 64)
-  b = a.splitPile(32)
+  b = a.splitPile(16)
 
-  t.equal(a.count, 32)
-  t.equal(b.count, 32)
+  t.equal(a.count, 48)
+  t.equal(b.count, 16)
   t.equal(a.item, b.item)
   t.equal(a.tags, b.tags)
   t.end()
