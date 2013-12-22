@@ -11,6 +11,10 @@
       this.tags = tags != null ? tags : {};
     }
 
+    ItemPile.prototype.clone = function() {
+      return new ItemPile(this.item, this.count, this.tags);
+    };
+
     ItemPile.maxPileSize = 64;
 
     ItemPile.itemFromString = function(s) {

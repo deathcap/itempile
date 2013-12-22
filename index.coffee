@@ -10,6 +10,9 @@ class ItemPile
     @count = count ? 1
     @tags = tags ? {}
 
+  clone: () ->
+    return new ItemPile(@item, @count, @tags)
+
   # maximum size items should pile to
   @maxPileSize = 64
 

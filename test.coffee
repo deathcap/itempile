@@ -194,3 +194,12 @@ test 'infinite', (t) ->
   t.equal(a.count, Infinity)
   t.end()
 
+test 'clone', (t) ->
+  a = new ItemPile('junk', 10)
+  b = a.clone()
+
+  b.decrease(1)
+  t.equal(b.count, 9)
+  t.equal(a.count, 10)
+
+  t.end()

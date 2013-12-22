@@ -214,4 +214,14 @@
     return t.end();
   });
 
+  test('clone', function(t) {
+    var a, b;
+    a = new ItemPile('junk', 10);
+    b = a.clone();
+    b.decrease(1);
+    t.equal(b.count, 9);
+    t.equal(a.count, 10);
+    return t.end();
+  });
+
 }).call(this);
