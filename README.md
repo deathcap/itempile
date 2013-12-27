@@ -3,6 +3,8 @@
 A data structure for groups of identical objects, up to a maximum number. 
 Useful for games. (This module was previously known as "itemstack".)
 
+[![Build Status](https://travis-ci.org/deathcap/itempile.png)](https://travis-ci.org/deathcap/itempile)
+
 Can be used standalone but most useful with [inventory](https://github.com/deathcap/inventory).
 
 ## Creating
