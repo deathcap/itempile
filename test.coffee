@@ -10,9 +10,27 @@ test 'create default', (t) ->
   t.deepEqual a.tags, {}
   t.end()
 
-test 'empty tags', (t) ->
-  a = new ItemPile('dirt', 1, {})
+test 'empty tags default', (t) ->
+  a = new ItemPile('dirt', 1)
   t.deepEqual a.tags, {}
+  t.end()
+
+test 'clone', (t) ->
+  a = new ItemPile('tool', 1, {damage:0})
+  t.equal a.item, 'tool'
+  t.equal a.count, 1
+  t.deepEqual a.tags, {damage:0}
+
+  b = a.clone()
+  t.equal a.item, 'tool'
+  t.equal a.count, 1
+  t.deepEqual a.tags, {damage:0}
+
+  b.tags.damage += 1
+
+  t.deepEqual b.tags, {damage:1}
+  t.deepEqual a.tags, {damage:0}
+
   t.end()
 
 test 'increase', (t) ->
@@ -71,8 +89,29 @@ test 'split', (t) ->
   t.equal(a.count, 48)
   t.equal(b.count, 16)
   t.equal(a.item, b.item)
-  t.equal(a.tags, b.tags)
+  t.deepEqual(a.tags, b.tags)  # (not equal() since is cloned, different object)
   t.end()
+
+test 'split clone', (t) ->
+  a = new ItemPile('tool', 3, {damage:0})
+  t.equal a.item, 'tool'
+  t.equal a.count, 3
+  t.deepEqual a.tags, {damage:0}
+
+  b = a.splitPile(1)
+  t.equal b.item, 'tool'
+  t.equal b.count, 1
+  t.equal a.count, 2
+  t.deepEqual a.tags, {damage:0}
+  t.deepEqual b.tags, {damage:0}
+
+  b.tags.damage += 1
+
+  t.deepEqual b.tags, {damage:1}
+  t.deepEqual a.tags, {damage:0}
+
+  t.end()
+
 
 test 'split bad', (t) ->
   a = new ItemPile('dirt', 10)

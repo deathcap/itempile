@@ -15,10 +15,36 @@
     return t.end();
   });
 
-  test('empty tags', function(t) {
+  test('empty tags default', function(t) {
     var a;
-    a = new ItemPile('dirt', 1, {});
+    a = new ItemPile('dirt', 1);
     t.deepEqual(a.tags, {});
+    return t.end();
+  });
+
+  test('clone', function(t) {
+    var a, b;
+    a = new ItemPile('tool', 1, {
+      damage: 0
+    });
+    t.equal(a.item, 'tool');
+    t.equal(a.count, 1);
+    t.deepEqual(a.tags, {
+      damage: 0
+    });
+    b = a.clone();
+    t.equal(a.item, 'tool');
+    t.equal(a.count, 1);
+    t.deepEqual(a.tags, {
+      damage: 0
+    });
+    b.tags.damage += 1;
+    t.deepEqual(b.tags, {
+      damage: 1
+    });
+    t.deepEqual(a.tags, {
+      damage: 0
+    });
     return t.end();
   });
 
@@ -79,7 +105,37 @@
     t.equal(a.count, 48);
     t.equal(b.count, 16);
     t.equal(a.item, b.item);
-    t.equal(a.tags, b.tags);
+    t.deepEqual(a.tags, b.tags);
+    return t.end();
+  });
+
+  test('split clone', function(t) {
+    var a, b;
+    a = new ItemPile('tool', 3, {
+      damage: 0
+    });
+    t.equal(a.item, 'tool');
+    t.equal(a.count, 3);
+    t.deepEqual(a.tags, {
+      damage: 0
+    });
+    b = a.splitPile(1);
+    t.equal(b.item, 'tool');
+    t.equal(b.count, 1);
+    t.equal(a.count, 2);
+    t.deepEqual(a.tags, {
+      damage: 0
+    });
+    t.deepEqual(b.tags, {
+      damage: 0
+    });
+    b.tags.damage += 1;
+    t.deepEqual(b.tags, {
+      damage: 1
+    });
+    t.deepEqual(a.tags, {
+      damage: 0
+    });
     return t.end();
   });
 

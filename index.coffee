@@ -1,6 +1,7 @@
 # vim: set shiftwidth=2 tabstop=2 softtabstop=2 expandtab:
 
 deepEqual = require 'deep-equal'
+clone = require 'clone'
 
 module.exports = 
 class ItemPile
@@ -11,7 +12,7 @@ class ItemPile
     @tags = tags ? {}
 
   clone: () ->
-    return new ItemPile(@item, @count, @tags)
+    return new ItemPile(@item, @count, clone(@tags, false))
 
   # maximum size items should pile to
   @maxPileSize = 64
@@ -92,7 +93,7 @@ class ItemPile
     return false if n > @count
     @count -= n
 
-    return new ItemPile(@item, n, @tags)
+    return new ItemPile(@item, n, clone(@tags, false))
 
   toString: () ->
     if @hasTags()

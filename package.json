@@ -1,7 +1,7 @@
 {
   "name": "itempile",
   "description": "split and merge 'piles' of items",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "repository": {
     "type": "git",
     "url": "git@github.com:deathcap/itempile.git"
@@ -10,7 +10,8 @@
     "test": "node test.js"
   },
   "dependencies": {
-    "deep-equal": "~0.1.0"
+    "deep-equal": "~0.1.0",
+    "clone": "~0.1.11"
   },
   "devDependencies": {
     "tape": "2.3.0"
