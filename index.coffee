@@ -1,25 +1,45 @@
 # vim: set shiftwidth=2 tabstop=2 softtabstop=2 expandtab:
 
 deepEqual = require 'deep-equal'
+deepFreeze = require 'deep-freeze'
 
 module.exports = 
 class ItemPile
 
   constructor: (item, count, tags) ->
-    @item = if typeof(item) == 'string' then ItemPile.itemFromString(item) else item
-    @count = count ? 1
-    @tags = tags ? {}
+    item = if typeof(item) == 'string' then ItemPile.itemFromString(item) else item
+    throw "itempile illegal item: #{item} is undefined #{count} #{tags}, must be defined" if not item?
+    count = count ? 1
+    throw "itempile illegal count: #{count} for item #{item} #{tags}, must be >0" if count <= 0
+    tags = tags ? {}
 
-  clone: () ->
-    return new ItemPile(@item, @count, @tags)
+    deepFreeze(tags)  # prevent altering all nested values (note: item, count already "frozen", not "objects")
+
+    # define read-only properties
+    Object.defineProperties this,
+      item:
+        value: item
+        writable: false
+        enumerable: true
+      count:
+        value: count
+        writable: false
+        enumerable: true
+      tags:
+        value: tags
+        writable: false
+        enumerable: true
+
+    Object.freeze(this) # TODO: necessary? doesn't hurt
 
   # maximum size items should pile to
   @maxPileSize = 64
 
   # convert item<->string; change these to use non-string items
   @itemFromString: (s) ->
-    if s instanceof ItemPile then return s
-    if !s then '' else s
+    return undefined if not s
+    return s if s instanceof ItemPile
+    return s
 
   @itemToString: (item) ->
     ''+item
@@ -28,41 +48,53 @@ class ItemPile
     Object.keys(@tags).length != 0    # not "{}"
 
   matchesType: (itemPile) ->
-    @item == itemPile.item
+    itemPile? && @item == itemPile.item
 
   matchesTypeAndCount: (itemPile) ->
-    @item == itemPile.item && @count == itemPile.count
+    itemPile? && @item == itemPile.item && @count == itemPile.count
 
   matchesTypeAndTags: (itemPile) ->
-    @item == itemPile.item && deepEqual(@tags, itemPile.tags, {strict:true})
+    itemPile? && @item == itemPile.item && deepEqual(@tags, itemPile.tags, {strict:true})
 
   matchesAll: (itemPile) ->
-    @matchesTypeAndCount(itemPile) && deepEqual(@tags, itemPile.tags, {strict:true})
+    itemPile? && @matchesTypeAndCount(itemPile) && deepEqual(@tags, itemPile.tags, {strict:true})
 
   # can this pile be merged with another?
   canPileWith: (itemPile) ->
+    return false if not itemPile?
     return false if itemPile.item != @item
-    return true if itemPile.count == 0 or @count == 0 # (special case: can always merge with 0-size pile of same item, regardless of tags - for placeholder slots)
     return false if itemPile.hasTags() or @hasTags() # any tag data makes unpileable
     true
 
-  # combine two piles if possible, altering both this and argument pile
-  # returns count of items that didn't fit
-  mergePile: (itemPile) ->
+  # combine two piles if possible, returning new [our increased pile, their decreased pile]
+  mergedPile: (itemPile) ->
     return false if not @canPileWith(itemPile)
-    itemPile.count = @increase(itemPile.count)
 
-  # increase count by argument, returning number of items that didn't fit
-  increase: (n) ->
+    [ourNew, excessCount] = @increased(itemPile.count)
+    if excessCount == 0
+      theirNew = undefined  # there's nothing left
+    else
+      theirNew = new ItemPile(itemPile.item, excessCount, itemPile.tags)
+
+    return [ourNew, theirNew]
+
+  # increase count by argument, returning [new pile, excess count that didn't fit]
+  increased: (n) ->
     [newCount, excessCount] = @tryAdding(n)
-    @count = newCount
-    return excessCount
+    newPile = new ItemPile(@item, newCount, @tags)
 
-  # decrease count by argument, returning number of items removed
-  decrease: (n) ->
+    return [newPile, excessCount]
+
+  # decrease count by argument, returning [new pile, count of items removed]
+  decreased: (n) ->
     [removedCount, remainingCount] = @trySubtracting(n)
-    @count = remainingCount
-    return removedCount
+
+    if remainingCount == 0
+      newPile = undefined   # they took everything!
+    else
+      newPile = new ItemPile(@item, remainingCount, @tags)
+
+    return [newPile, removedCount]
 
   # try combining count of items up to max pile size, returns [newCount, excessCount]
   tryAdding: (n) ->
@@ -80,7 +112,7 @@ class ItemPile
     else
       return [n, @count - n]  # had enough, some remain
 
-  # remove count of argument items, returning new pile of those items which were split off
+  # remove count of argument items, returning [our updated pile, new pile of those items which were split off]
   splitPile: (n) ->
     if n < 0 
       # negative count = all but n
@@ -89,10 +121,21 @@ class ItemPile
       # fraction = fraction
       n = Math.ceil(@count * n)
 
-    return false if n > @count
-    @count -= n
+    if n > @count
+      # tried to take too much, do nothing
+      return [this, undefined]
 
-    return new ItemPile(@item, n, @tags)
+    if @count - n == 0
+      ourNew = undefined
+    else
+      ourNew = new ItemPile(@item, @count - n, @tags)
+
+    if n == 0
+      theirNew = undefined
+    else
+      theirNew = new ItemPile(@item, n, @tags)
+
+    return [ourNew, theirNew]
 
   toString: () ->
     if @hasTags()

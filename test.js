@@ -15,6 +15,111 @@
     return t.end();
   });
 
+  test('create illegal zero-count pile', function(t) {
+    var a, caughtError, error;
+    try {
+      a = new ItemPile('dirt', 0);
+    } catch (_error) {
+      error = _error;
+      caughtError = error;
+    }
+    console.log(caughtError);
+    t.equal(caughtError !== void 0, true);
+    return t.end();
+  });
+
+  test('create illegal undefined item', function(t) {
+    var a, caughtError, error;
+    try {
+      a = new ItemPile(void 0, 0);
+    } catch (_error) {
+      error = _error;
+      caughtError = error;
+    }
+    console.log(caughtError);
+    t.equal(caughtError !== void 0, true);
+    return t.end();
+  });
+
+  test('immutable count', function(t) {
+    'use strict';
+    var a, caughtError, error;
+    a = new ItemPile('dirt', 1);
+    t.equal(a.count, 1);
+    try {
+      a.count = 2;
+    } catch (_error) {
+      error = _error;
+      caughtError = error;
+    }
+    console.log(caughtError);
+    t.equal(caughtError !== void 0, true);
+    t.equal(a.count, 1);
+    return t.end();
+  });
+
+  test('immutable item', function(t) {
+    'use strict';
+    var a, caughtError, error;
+    a = new ItemPile('sand', 1);
+    try {
+      a.item = 'glass';
+    } catch (_error) {
+      error = _error;
+      caughtError = error;
+    }
+    console.log(caughtError);
+    t.equal(caughtError !== void 0, true);
+    t.equal(a.item, 'sand');
+    return t.end();
+  });
+
+  test('immutable tags', function(t) {
+    'use strict';
+    var a, caughtError, error;
+    a = new ItemPile('tool', 1, {
+      damage: 0
+    });
+    try {
+      a.tags = {
+        damage: 1
+      };
+    } catch (_error) {
+      error = _error;
+      caughtError = error;
+    }
+    console.log(caughtError);
+    t.equal(caughtError !== void 0, true);
+    t.deepEqual(a.tags, {
+      damage: 0
+    });
+    return t.end();
+  });
+
+  test('immutable tags deep', function(t) {
+    'use strict';
+    var a, caughtError, error;
+    a = new ItemPile('tool', 1, {
+      modifiers: {
+        lastsLonger: 1
+      }
+    });
+    try {
+      a.tags.modifiers.lastsLonger = 2;
+    } catch (_error) {
+      error = _error;
+      caughtError = error;
+    }
+    t.equal(caughtError !== void 0, true);
+    console.log(caughtError);
+    t.deepEqual(a.tags, {
+      modifiers: {
+        lastsLonger: 1
+      }
+    });
+    return t.end();
+  });
+
   test('empty tags', function(t) {
     var a;
     a = new ItemPile('dirt', 1, {});
@@ -22,99 +127,95 @@
     return t.end();
   });
 
-  test('increase', function(t) {
-    var a, excess;
+  test('increased', function(t) {
+    var a, a2, a3, excess, _ref, _ref1;
     a = new ItemPile('dirt', 1);
-    excess = a.increase(10);
-    t.equal(a.count, 11);
+    _ref = a.increased(10), a2 = _ref[0], excess = _ref[1];
+    t.equal(a2.count, 11);
     t.equal(excess, 0);
-    excess = a.increase(100);
-    t.equal(a.count, 64);
+    _ref1 = a2.increased(100), a3 = _ref1[0], excess = _ref1[1];
+    t.equal(a3.count, 64);
     t.equal(excess, 47);
     return t.end();
   });
 
   test('merge simple', function(t) {
-    var a, b, excess;
+    var a, a2, b, b2, _ref;
     a = new ItemPile('dirt', 10);
     b = new ItemPile('dirt', 20);
-    excess = a.mergePile(b);
-    t.equal(a.item, b.item);
-    t.equal(a.count + b.count, 10 + 20);
-    t.equal(excess, 0);
-    t.equal(a.count, 30);
-    t.equal(b.count, 0);
+    _ref = a.mergedPile(b), a2 = _ref[0], b2 = _ref[1];
+    t.equal(a2.item, a.item);
+    t.equal(a2.count, 30);
+    t.equal(b2 === void 0, true);
     return t.end();
   });
 
   test('merge big', function(t) {
-    var a, b, excess;
+    var a, a2, b, b2, _ref;
     a = new ItemPile('dirt', 1);
     b = new ItemPile('dirt', 80);
-    excess = a.mergePile(b);
-    t.equal(a.item, b.item);
-    t.equal(a.count + b.count, 80 + 1);
-    t.equal(excess, b.count);
-    t.equal(a.count, 64);
-    t.equal(b.count, 17);
-    return t.end();
-  });
-
-  test('merge 0-size', function(t) {
-    var a, b, excess;
-    a = new ItemPile('pick', 0);
-    b = new ItemPile('pick', 1, {
-      damage: 0
-    });
-    excess = a.mergePile(b);
-    t.equal(excess, 0);
-    t.equal(a.count, 1);
+    _ref = a.mergedPile(b), a2 = _ref[0], b2 = _ref[1];
+    t.equal(a2.item, b2.item);
+    t.equal(a2.count + b2.count, 80 + 1);
+    t.equal(a2.count, 64);
+    t.equal(b2.count, 17);
     return t.end();
   });
 
   test('split', function(t) {
-    var a, b;
+    var a, a2, b, _ref;
     a = new ItemPile('dirt', 64);
-    b = a.splitPile(16);
-    t.equal(a.count, 48);
+    _ref = a.splitPile(16), a2 = _ref[0], b = _ref[1];
+    t.equal(a2.count, 48);
     t.equal(b.count, 16);
-    t.equal(a.item, b.item);
-    t.equal(a.tags, b.tags);
+    t.equal(a2.item, b.item);
+    t.equal(a2.tags, b.tags);
+    return t.end();
+  });
+
+  test('split all', function(t) {
+    var a, a2, b, _ref;
+    a = new ItemPile('dirt', 10);
+    _ref = a.splitPile(10), a2 = _ref[0], b = _ref[1];
+    t.equal(a2 === void 0, true);
+    t.equal(b.item, a.item);
+    t.equal(b.count, 10);
+    t.equal(b.count, a.count);
     return t.end();
   });
 
   test('split bad', function(t) {
-    var a, b;
+    var a, a2, b, _ref;
     a = new ItemPile('dirt', 10);
-    b = a.splitPile(1000);
-    t.equal(b, false);
-    t.equal(a.count, 10);
+    _ref = a.splitPile(1000), a2 = _ref[0], b = _ref[1];
+    t.equal(b === void 0, true);
+    t.equal(a2.count, a.count);
     return t.end();
   });
 
   test('split neg', function(t) {
-    var a, b;
+    var a, a2, b, _ref;
     a = new ItemPile('dirt', 10);
-    b = a.splitPile(-1);
-    t.equal(a.count, 1);
+    _ref = a.splitPile(-1), a2 = _ref[0], b = _ref[1];
+    t.equal(a2.count, 1);
     t.equal(b.count, 9);
     return t.end();
   });
 
   test('split fract half', function(t) {
-    var a, b;
+    var a, a2, b, _ref;
     a = new ItemPile('gold', 10);
-    b = a.splitPile(0.5);
-    t.equal(a.count, 5);
+    _ref = a.splitPile(0.5), a2 = _ref[0], b = _ref[1];
+    t.equal(a2.count, 5);
     t.equal(b.count, 5);
     return t.end();
   });
 
   test('split fract uneven', function(t) {
-    var a, b;
+    var a, a2, b, _ref;
     a = new ItemPile('gold', 11);
-    b = a.splitPile(0.5);
-    t.equal(a.count, 5);
+    _ref = a.splitPile(0.5), a2 = _ref[0], b = _ref[1];
+    t.equal(a2.count, 5);
     t.equal(b.count, 6);
     return t.end();
   });
@@ -178,7 +279,7 @@
 
   test('fromString/toString roundtrip', function(t) {
     var b, outStr, s, strings, _i, _len;
-    strings = ['24:dirt', '48:dirt', '1000:dirt', '0:dirt', '1:foo {"tag":1}', '2:hmm {"foo":[],"bar":2}'];
+    strings = ['24:dirt', '48:dirt', '1000:dirt', '1:foo {"tag":1}', '2:hmm {"foo":[],"bar":2}'];
     for (_i = 0, _len = strings.length; _i < _len; _i++) {
       s = strings[_i];
       b = ItemPile.fromString(s);
@@ -194,33 +295,23 @@
     a = ItemPile.itemFromString('foo');
     t.equals(a, 'foo');
     b = ItemPile.itemFromString(void 0);
-    t.equal(b, '');
+    t.equal(b === void 0, true);
     c = ItemPile.itemToString('bar');
     t.equals(c, 'bar');
     d = ItemPile.itemToString(ItemPile.itemFromString(null));
-    t.equals(d, '');
+    t.equals(d, 'undefined');
     return t.end();
   });
 
   test('infinite', function(t) {
-    var a;
+    var a, a2, a3, a4, excessCount, removedCount, _ref, _ref1, _ref2;
     a = new ItemPile('magic', Infinity);
-    a.decrease(1);
-    t.equal(a.count, Infinity);
-    a.decrease(1000000);
-    t.equal(a.count, Infinity);
-    a.increase(1000000000);
-    t.equal(a.count, Infinity);
-    return t.end();
-  });
-
-  test('clone', function(t) {
-    var a, b;
-    a = new ItemPile('junk', 10);
-    b = a.clone();
-    b.decrease(1);
-    t.equal(b.count, 9);
-    t.equal(a.count, 10);
+    _ref = a.decreased(1), a2 = _ref[0], removedCount = _ref[1];
+    t.equal(a2.count, Infinity);
+    _ref1 = a.decreased(1000000), a3 = _ref1[0], removedCount = _ref1[1];
+    t.equal(a3.count, Infinity);
+    _ref2 = a.increased(1000000000), a4 = _ref2[0], excessCount = _ref2[1];
+    t.equal(a4.count, Infinity);
     return t.end();
   });
 
