@@ -146,6 +146,27 @@ test 'split fract uneven', (t) ->
   t.equal(b.count, 6)
   t.end()
 
+test 'split infinitive', (t) ->
+  a = new ItemPile('diamond', Infinity)
+
+  b = a.splitPile(1)
+  t.equal(b.count, 1)
+  t.equal(a.count, Infinity)
+
+  c = a.splitPile(10)
+  t.equal(c.count, 10)
+  t.equal(a.count, Infinity)
+
+  d = a.splitPile(-7)   # all but N of Infinity is still Infinity..
+  t.equal(d.count, Infinity)
+  t.equal(a.count, Infinity)
+
+  e = a.splitPile(0.5)
+  t.equal(e.count, Infinity)
+  t.equal(a.count, Infinity)
+
+  t.end()
+
 test 'matches', (t) ->
   a = new ItemPile('dirt', 3)
   b = new ItemPile('dirt', 4)

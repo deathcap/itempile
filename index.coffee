@@ -91,7 +91,7 @@ class ItemPile
       n = Math.ceil(@count * n)
 
     return false if n > @count
-    @count -= n
+    @count -= n       unless n == Infinity # (subtract, but avoid Infinity - Infinity = NaN)
 
     return new ItemPile(@item, n, clone(@tags, false))
 

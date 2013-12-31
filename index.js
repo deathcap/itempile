@@ -121,7 +121,9 @@
       if (n > this.count) {
         return false;
       }
-      this.count -= n;
+      if (n !== Infinity) {
+        this.count -= n;
+      }
       return new ItemPile(this.item, n, clone(this.tags, false));
     };
 

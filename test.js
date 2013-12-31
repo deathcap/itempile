@@ -175,6 +175,24 @@
     return t.end();
   });
 
+  test('split infinitive', function(t) {
+    var a, b, c, d, e;
+    a = new ItemPile('diamond', Infinity);
+    b = a.splitPile(1);
+    t.equal(b.count, 1);
+    t.equal(a.count, Infinity);
+    c = a.splitPile(10);
+    t.equal(c.count, 10);
+    t.equal(a.count, Infinity);
+    d = a.splitPile(-7);
+    t.equal(d.count, Infinity);
+    t.equal(a.count, Infinity);
+    e = a.splitPile(0.5);
+    t.equal(e.count, Infinity);
+    t.equal(a.count, Infinity);
+    return t.end();
+  });
+
   test('matches', function(t) {
     var a, b, c, d, e, f, g;
     a = new ItemPile('dirt', 3);
