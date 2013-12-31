@@ -6,14 +6,23 @@
     "type": "git",
     "url": "git@github.com:deathcap/itempile.git"
   },
-  "scripts": {
-    "test": "node test.js"
-  },
+  "keywords": [
+    "game",
+    "items",
+    "piles",
+    "group",
+    "itemstack",
+    "inventory"
+  ],
   "dependencies": {
     "deep-equal": "~0.1.0",
     "clone": "~0.1.11"
   },
   "devDependencies": {
     "tape": "2.3.0"
-  }
+  },
+  "scripts": {
+    "test": "node test.js"
+  },
+  "license": "MIT"
 }
