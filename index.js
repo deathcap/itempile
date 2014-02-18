@@ -158,6 +158,14 @@
       return new ItemPile(item, count, tags);
     };
 
+    ItemPile.fromArrayIfArray = function(a) {
+      if (Array.isArray(a)) {
+        return ItemPile.fromArray(a);
+      } else {
+        return a;
+      }
+    };
+
     return ItemPile;
 
   })();

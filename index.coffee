@@ -115,5 +115,11 @@ class ItemPile
 
   @fromArray: (a) ->
     [item, count, tags] = a
-    return new ItemPile(item, count, tags)
+    new ItemPile(item, count, tags)
+
+  @fromArrayIfArray: (a) ->
+    if Array.isArray(a)
+      ItemPile.fromArray(a)
+    else
+      a
 

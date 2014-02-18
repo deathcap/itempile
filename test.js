@@ -264,6 +264,20 @@
     return t.end();
   });
 
+  test('fromArrayIfArray', function(t) {
+    var a, b;
+    a = new ItemPile('dirt', 42);
+    b = ItemPile.fromArrayIfArray(a);
+    t.equal(a.matchesAll(b), true);
+    t.equal(b.matchesAll(a), true);
+    t.equal(a.count, 42);
+    t.equal(b.count, 42);
+    t.equal(a.item, 'dirt');
+    t.equal(b.item, 'dirt');
+    t.equal(a, b);
+    return t.end();
+  });
+
   test('fromString', function(t) {
     var a;
     a = ItemPile.fromString('24:dirt');

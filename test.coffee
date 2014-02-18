@@ -225,6 +225,18 @@ test 'fromArray', (t) ->
 
   t.end()
 
+test 'fromArrayIfArray', (t) ->
+  a = new ItemPile('dirt', 42)
+  b = ItemPile.fromArrayIfArray(a)
+  t.equal(a.matchesAll(b), true)
+  t.equal(b.matchesAll(a), true)
+  t.equal(a.count, 42)
+  t.equal(b.count, 42)
+  t.equal(a.item, 'dirt')
+  t.equal(b.item, 'dirt')
+  t.equal(a, b)
+  t.end()
+
 test 'fromString', (t) ->
   a = ItemPile.fromString('24:dirt')
   console.log(a)
