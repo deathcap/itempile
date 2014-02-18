@@ -1,9 +1,8 @@
-# vim: set shiftwidth=2 tabstop=2 softtabstop=2 expandtab:
 
 deepEqual = require 'deep-equal'
 clone = require 'clone'
 
-module.exports = 
+module.exports =
 class ItemPile
 
   constructor: (item, count, tags) ->
@@ -114,4 +113,7 @@ class ItemPile
 
     return new ItemPile(item, count, tags)
 
+  @fromArray: (a) ->
+    [item, count, tags] = a
+    return new ItemPile(item, count, tags)
 

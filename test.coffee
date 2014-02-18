@@ -206,6 +206,25 @@ test 'toString', (t) ->
   t.equal(b+'', '1:magic {"foo":-7}')
   t.end()
 
+test 'fromArray', (t) ->
+  a = ItemPile.fromArray(['dirt', 42])
+  t.equal(a.count, 42)
+  t.equal(a.item, 'dirt')
+  t.equal(a.hasTags(), false)
+
+  b = ItemPile.fromArray(['dirt'])
+  t.equal(b.count, 1)
+  t.equal(b.item, 'dirt')
+  t.equal(b.hasTags(), false)
+
+  c = ItemPile.fromArray(['pick', 1, {damage:0}])
+  t.equal(c.count, 1)
+  t.equal(c.item, 'pick')
+  t.equal(c.hasTags(), true)
+  t.deepEqual(c.tags, {damage:0})
+
+  t.end()
+
 test 'fromString', (t) ->
   a = ItemPile.fromString('24:dirt')
   console.log(a)
