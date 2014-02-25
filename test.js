@@ -290,7 +290,7 @@
 
   test('fromString/toString roundtrip', function(t) {
     var b, outStr, s, strings, _i, _len;
-    strings = ['24:dirt', '48:dirt', '1000:dirt', '0:dirt', '1:foo {"tag":1}', '2:hmm {"foo":[],"bar":2}'];
+    strings = ['24:dirt', '48:dirt', '1000:dirt', '0:dirt', '1:foo {"tag":1}', '2:hmm {"foo":[],"bar":2}', 'Infinity:gold'];
     for (_i = 0, _len = strings.length; _i < _len; _i++) {
       s = strings[_i];
       b = ItemPile.fromString(s);

@@ -104,7 +104,10 @@ class ItemPile
     a = s.match(/^([^:]+):([^ ]+) ?(.*)/) # assumptions: positive integral count, item name no spaces
     return undefined if not a
     [_, countStr, itemStr, tagsStr] = a
-    count = parseInt(countStr, 10)
+    if countStr == 'Infinity'
+      count = Infinity
+    else
+      count = parseInt(countStr, 10)
     item = ItemPile.itemFromString(itemStr)
     if tagsStr && tagsStr.length
       tags = JSON.parse(tagsStr)

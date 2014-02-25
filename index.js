@@ -142,7 +142,11 @@
         return void 0;
       }
       _ = a[0], countStr = a[1], itemStr = a[2], tagsStr = a[3];
-      count = parseInt(countStr, 10);
+      if (countStr === 'Infinity') {
+        count = Infinity;
+      } else {
+        count = parseInt(countStr, 10);
+      }
       item = ItemPile.itemFromString(itemStr);
       if (tagsStr && tagsStr.length) {
         tags = JSON.parse(tagsStr);

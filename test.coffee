@@ -253,6 +253,7 @@ test 'fromString/toString roundtrip', (t) ->
     '0:dirt'
     '1:foo {"tag":1}'
     '2:hmm {"foo":[],"bar":2}'
+    'Infinity:gold'
     ]
   for s in strings
     b = ItemPile.fromString(s)
