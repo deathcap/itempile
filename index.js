@@ -113,6 +113,9 @@
     };
 
     ItemPile.prototype.splitPile = function(n) {
+      if (n === 0) {
+        return false;
+      }
       if (n < 0) {
         n = this.count + n;
       } else if (n < 1) {

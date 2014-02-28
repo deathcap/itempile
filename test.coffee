@@ -146,6 +146,13 @@ test 'split fract uneven', (t) ->
   t.equal(b.count, 6)
   t.end()
 
+test 'split zero', (t) ->
+  a = new ItemPile('diamond', 20)
+
+  b = a.splitPile(0)
+  t.equal(b, false)
+  t.end()
+
 test 'split infinitive', (t) ->
   a = new ItemPile('diamond', Infinity)
 
@@ -164,6 +171,9 @@ test 'split infinitive', (t) ->
   e = a.splitPile(0.5)
   t.equal(e.count, Infinity)
   t.equal(a.count, Infinity)
+
+  f = a.splitPile(0)  # not 0 * Infinity -> NaN
+  t.equal(f, false)
 
   t.end()
 

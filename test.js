@@ -175,8 +175,16 @@
     return t.end();
   });
 
+  test('split zero', function(t) {
+    var a, b;
+    a = new ItemPile('diamond', 20);
+    b = a.splitPile(0);
+    t.equal(b, false);
+    return t.end();
+  });
+
   test('split infinitive', function(t) {
-    var a, b, c, d, e;
+    var a, b, c, d, e, f;
     a = new ItemPile('diamond', Infinity);
     b = a.splitPile(1);
     t.equal(b.count, 1);
@@ -190,6 +198,8 @@
     e = a.splitPile(0.5);
     t.equal(e.count, Infinity);
     t.equal(a.count, Infinity);
+    f = a.splitPile(0);
+    t.equal(f, false);
     return t.end();
   });
 
