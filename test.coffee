@@ -44,6 +44,12 @@ test 'increase', (t) ->
   t.equal excess, 47
   t.end()
 
+test 'increase infinity', (t) ->
+  a = new ItemPile('money', 1)
+  excess = a.increase(Infinity)
+  t.equal a.count, Infinity
+  t.end()
+
 test 'merge simple', (t) ->
   a = new ItemPile('dirt', 10)
   b = new ItemPile('dirt', 20)

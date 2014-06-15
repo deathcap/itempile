@@ -66,13 +66,17 @@ class ItemPile
 
   # try combining count of items up to max pile size, returns [newCount, excessCount]
   tryAdding: (n) ->
+    # special case: infinite incoming count sets pile to infinite, even though >maxPileSize
+    # TODO: option to disable infinite piles? might want to add only up to 64 etc. (ref GH-2)
+    return [Infinity, 0] if n == Infinity
+
     sum = @count + n
-    if sum > ItemPile.maxPileSize and @count != Infinity # (special case: infinite piles never overflow)
+    if sum > ItemPile.maxPileSize and @count != Infinity # (special case: infinite destination piles never overflow)
       return [ItemPile.maxPileSize, sum - ItemPile.maxPileSize] # overflowing pile
     else
       return [sum, 0] # added everything they wanted
 
-  # try removing count of items, returns [removedCount, remainingCount]
+  # try removing a finite count of items, returns [removedCount, remainingCount]
   trySubtracting: (n) ->
     difference = @count - n
     if difference < 0
