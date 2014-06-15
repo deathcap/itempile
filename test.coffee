@@ -41,13 +41,13 @@ test 'increase', (t) ->
 
   excess = a.increase(100)
   t.equal a.count, 64
-  t.equal excess, 47 
+  t.equal excess, 47
   t.end()
 
 test 'merge simple', (t) ->
   a = new ItemPile('dirt', 10)
   b = new ItemPile('dirt', 20)
-  
+
   excess = a.mergePile(b)
 
   t.equal(a.item, b.item)
@@ -116,7 +116,7 @@ test 'split clone', (t) ->
 test 'split bad', (t) ->
   a = new ItemPile('dirt', 10)
   b = a.splitPile(1000)
-  
+
   t.equal(b, false)
   t.equal(a.count, 10)  # unchanged
   t.end()
@@ -180,7 +180,7 @@ test 'split infinitive', (t) ->
 test 'matches', (t) ->
   a = new ItemPile('dirt', 3)
   b = new ItemPile('dirt', 4)
-  
+
   t.equal(a.matchesType(b), true)
   t.equal(a.matchesTypeAndCount(b), false)
   t.equal(a.matchesAll(b), false)
