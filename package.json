@@ -1,7 +1,7 @@
 {
   "name": "itempile",
   "description": "split and merge 'piles' of items",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "main": "itempile.coffee",
   "repository": {
     "type": "git",
