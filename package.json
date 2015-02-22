@@ -16,8 +16,8 @@
     "inventory"
   ],
   "dependencies": {
-    "deep-equal": "~0.1.0",
-    "clone": "~0.1.11",
+    "deep-equal": "^1.0.0"
+    "clone": "^1.0.0",
     "coffeeify": "^0.6.0"
   },
   "devDependencies": {
