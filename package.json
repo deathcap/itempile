@@ -2,7 +2,7 @@
   "name": "itempile",
   "description": "split and merge 'piles' of items",
   "version": "0.2.3",
-  "main": "itempile.coffee",
+  "main": "itempile.es6",
   "repository": {
     "type": "git",
     "url": "git@github.com:deathcap/itempile.git"
@@ -16,19 +16,19 @@
     "inventory"
   ],
   "dependencies": {
-    "deep-equal": "^1.0.0"
-    "clone": "^1.0.0",
-    "coffeeify": "^0.6.0"
+    "babelify": "^5.0.3",
+    "clone": "~0.1.11",
+    "deep-equal": "~0.1.0"
   },
   "devDependencies": {
     "tape": "2.3.0"
   },
   "scripts": {
-    "test": "browserify test.coffee | node"
+    "test": "browserify test.es6 | node"
   },
   "browserify": {
     "transform": [
-      "coffeeify"
+      "babelify"
     ]
   },
   "license": "MIT"
