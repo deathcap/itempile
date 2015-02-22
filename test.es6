@@ -291,7 +291,8 @@ test('fromString/toString roundtrip', t => {
     'Infinity:gold',
     ];
 
-  for (let s of strings) {
+  for (let i = 0; i < strings.length; i += 1) {
+    const s = strings[i];
     const b = ItemPile.fromString(s);
     const outStr = b+'';
     t.equal(s, outStr);
