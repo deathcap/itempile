@@ -1,7 +1,7 @@
 {
   "name": "itempile",
   "description": "split and merge 'piles' of items",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "itempile.es6",
   "repository": {
     "type": "git",
