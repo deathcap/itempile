@@ -3,10 +3,10 @@ const deepEqual = require('deep-equal');
 const cloneObject = require('clone');
 
 class ItemPile {
-  constructor(item, count=1, tags={}) {
+  constructor(item, count, tags) {
     this.item = (typeof(item) === 'string' ? ItemPile.itemFromString(item) : item);
-    this.count = count;
-    this.tags = tags;
+    this.count = count !== undefined ? count : 1;
+    this.tags = tags !== undefined ? tags : {};
   }
 
   clone() {
@@ -66,14 +66,18 @@ class ItemPile {
 
   // increase count by argument, returning number of items that didn't fit
   increase(n) {
-    const [newCount, excessCount] = this.tryAdding(n);
+    const a = this.tryAdding(n);
+    const newCount = a[0];
+    const excessCount = a[1];
     this.count = newCount;
     return excessCount;
   }
 
   // decrease count by argument, returning number of items removed
   decrease(n) {
-    const [removedCount, remainingCount] = this.trySubtracting(n);
+    const a = this.trySubtracting(n);
+    const removedCount = a[0];
+    const remainingCount= a[1];
     this.count = remainingCount;
     return removedCount;
   }
@@ -130,7 +134,9 @@ class ItemPile {
   static fromString(s) {
     const a = s.match(/^([^:]+):([^ ]+) ?(.*)/); // assumptions: positive integral count, item name no spaces
     if (!a) return undefined;
-    const [_, countStr, itemStr, tagsStr] = a;
+    const countStr = a[1];
+    const itemStr = a[2];
+    const tagsStr = a[3];
     let count;
     if (countStr === 'Infinity') {
       count = Infinity;
@@ -148,7 +154,10 @@ class ItemPile {
     return new ItemPile(item, count, tags);
   }
 
-  static fromArray([item, count, tags]) {
+  static fromArray(a) {
+    const item = a[0];
+    const count = a[1];
+    const tags = a[2];
     return new ItemPile(item, count, tags);
   }
 
