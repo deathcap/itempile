@@ -2,7 +2,7 @@
   "name": "itempile",
   "description": "split and merge 'piles' of items",
   "version": "1.0.2",
-  "main": "itempile.es6",
+  "main": "itempile.js",
   "repository": {
     "type": "git",
     "url": "git@github.com:deathcap/itempile.git"
@@ -26,7 +26,7 @@
     "node >=4"
   ],
   "scripts": {
-    "test": "node test.es6"
+    "test": "node test.js"
   },
   "license": "MIT"
 }
