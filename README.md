@@ -7,6 +7,8 @@ Useful for games. (This module was previously known as "itemstack".)
 
 Can be used standalone but most useful with [inventory](https://github.com/deathcap/inventory).
 
+Requires a ES6-compatible environment (at least partially), tested on Node v4.2.4
+
 ## Creating
 
 An item pile can be created simply with an item name and count, for example:
