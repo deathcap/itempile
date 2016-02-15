@@ -16,11 +16,11 @@
     "inventory"
   ],
   "dependencies": {
-    "clone": "^1.0.0",
-    "deep-equal": "^1.0.0"
+    "clone": "^1.0.2",
+    "deep-equal": "^1.0.1"
   },
   "devDependencies": {
-    "tape": "3.5.0"
+    "tape": "^4.4.0"
   },
   "engines": [
     "node >=4"
